@@ -2,12 +2,15 @@ package com.empresa.transporte.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "vehicle")
 public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_vehicle")
     private Long id;
 
     private String brand;
@@ -19,6 +22,9 @@ public class Vehicle {
     private Double loadCapacityKg;
     private Integer completedTrips;
     private Double kilometersTraveled;
+
+    @OneToMany(targetEntity = Trip.class, fetch = FetchType.LAZY)
+    private List<Trip> trips;
 
     public Vehicle() {
     }
