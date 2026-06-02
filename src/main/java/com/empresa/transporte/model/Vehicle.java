@@ -10,7 +10,6 @@ public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_vehicle")
     private Long id;
 
     private String brand;
@@ -23,7 +22,7 @@ public class Vehicle {
     private Integer completedTrips;
     private Double kilometersTraveled;
 
-    @OneToMany(targetEntity = Trip.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Trip.class, fetch = FetchType.LAZY, mappedBy = "vehicle")
     private List<Trip> trips;
 
     public Vehicle() {
