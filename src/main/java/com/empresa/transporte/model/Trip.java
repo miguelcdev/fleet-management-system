@@ -20,7 +20,7 @@ public class Trip {
     private LocalDate arrivalDate;
     private Double distanceKm;
 
-    @ManyToOne(targetEntity = Vehicle.class, cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "id_vehicle")
     private Vehicle vehicle;
 
@@ -82,5 +82,13 @@ public class Trip {
 
     public void setDistanceKm(Double distanceKm) {
         this.distanceKm = distanceKm;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 }
