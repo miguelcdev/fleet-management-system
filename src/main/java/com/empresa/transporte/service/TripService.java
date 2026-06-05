@@ -1,5 +1,6 @@
 package com.empresa.transporte.service;
 
+import com.empresa.transporte.dto.TripRequestDTO;
 import com.empresa.transporte.model.Trip;
 import com.empresa.transporte.model.Vehicle;
 import com.empresa.transporte.repository.TripRepository;
@@ -22,14 +23,21 @@ public class TripService {
     }
 
     //Create new trip
-    public Trip saveTrip(Trip trip){
-        Long vehicleId = trip.getVehicle().getId();
-        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(() -> new RuntimeException("Vehicle not found"));
+    public Trip saveTrip(TripRequestDTO tripDTO){
+
+        Vehicle vehicle = vehicleRepository.findById(tripDTO.getVehicleId()).orElseThrow(() -> new RuntimeException("Vehicle not found"));
 
         vehicle.setCompletedTrips(vehicle.getCompletedTrips()+1);
-        vehicle.setKilometersTraveled(vehicle.getKilometersTraveled()+ trip.getDistanceKm());
+        vehicle.setKilometersTraveled(vehicle.getKilometersTraveled()+ tripDTO.getDistanceKm());
 
+        Trip trip = new Trip();
+        trip.setOrigin(tripDTO.getOrigin());
+        trip.setDestination(tripDTO.getDestination());
+        trip.setDepartureDate(tripDTO.getDepartureDate());
+        trip.setArrivalDate(tripDTO.getArrivalDate());
+        trip.setDistanceKm(tripDTO.getDistanceKm());
         trip.setVehicle(vehicle);
+
         vehicleRepository.save(vehicle);
         return tripRepository.save(trip);
     }

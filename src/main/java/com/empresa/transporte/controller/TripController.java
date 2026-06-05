@@ -1,5 +1,6 @@
 package com.empresa.transporte.controller;
 
+import com.empresa.transporte.dto.TripRequestDTO;
 import com.empresa.transporte.model.Trip;
 import com.empresa.transporte.service.TripService;
 
@@ -19,7 +20,7 @@ public class TripController {
     }
 
     @PostMapping("/add")
-    public Trip createTrip(@RequestBody Trip trip) {
+    public Trip createTrip(@RequestBody TripRequestDTO trip) {
         return tripService.saveTrip(trip);
     }
 
