@@ -1,5 +1,6 @@
 package com.empresa.transporte.service;
 
+import com.empresa.transporte.dto.VehicleRequestDTO;
 import com.empresa.transporte.model.Vehicle;
 import com.empresa.transporte.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,22 @@ public class VehicleService {
     }
 
     //Create a new vehicle
-    public Vehicle saveVehicle(Vehicle vehicle){
+    public Vehicle saveVehicle(VehicleRequestDTO vehicleDTO){
+
+        //Validation of the License plate did not the same of the other vehicle registered
+        if(vehicleRepository.existsByLicensePlate(vehicleDTO.getLicensePlate())){
+            throw new RuntimeException("License plate already exists");
+        }
+
+        //Creation of new vehicle
+        Vehicle vehicle = new Vehicle();
+        vehicle.setBrand(vehicleDTO.getBrand());
+        vehicle.setModel(vehicleDTO.getModel());
+        vehicle.setLicensePlate(vehicleDTO.getLicensePlate());
+        vehicle.setLoadCapacityKg(vehicleDTO.getLoadCapacityKg());
+        vehicle.setCompletedTrips(0);
+        vehicle.setKilometersTraveled(0.0);
+
         return vehicleRepository.save(vehicle);
     }
 

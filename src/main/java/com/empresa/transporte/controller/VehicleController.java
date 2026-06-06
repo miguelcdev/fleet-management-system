@@ -1,5 +1,6 @@
 package com.empresa.transporte.controller;
 
+import com.empresa.transporte.dto.VehicleRequestDTO;
 import com.empresa.transporte.model.Vehicle;
 import com.empresa.transporte.service.VehicleService;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class VehicleController {
     }
 
     @PostMapping("/add")
-    public Vehicle createVehicle(@RequestBody Vehicle vehicle){
+    public Vehicle createVehicle(@RequestBody VehicleRequestDTO vehicle){
         return vehicleService.saveVehicle(vehicle);
     }
 
