@@ -53,21 +53,21 @@ public class TripService {
     }
 
     //Update trip
-    public Trip updateTrip(Trip request, Long id){
-        //Find trip by id
-        Optional<Trip> findTrip = tripRepository.findById(id);
+    public Trip updateTrip(TripRequestDTO request, Long id){
+        //Search the trip by id
+        Trip trip = tripRepository.findById(id).orElseThrow(() -> new RuntimeException("Trip not found"));
 
-        if(findTrip.isPresent()){
-            Trip trip = findTrip.get();
-            trip.setOrigin(request.getOrigin());
-            trip.setDestination(request.getDestination());
-            trip.setDepartureDate(request.getDepartureDate());
-            trip.setArrivalDate(request.getArrivalDate());
-            trip.setDistanceKm(request.getDistanceKm());
+        //Search a vehicle by id, which the user want to update for the trip selected by id
+        Vehicle vehicle = vehicleRepository.findById(request.getVehicleId()).orElseThrow(() -> new RuntimeException("Vehicle not found"));
 
-            return tripRepository.save(trip);
-        }
-        return null;
+        trip.setOrigin(request.getOrigin());
+        trip.setDestination(request.getDestination());
+        trip.setDepartureDate(request.getDepartureDate());
+        trip.setArrivalDate(request.getArrivalDate());
+        trip.setDistanceKm(request.getDistanceKm());
+        trip.setVehicle(vehicle);
+
+        return tripRepository.save(trip);
     }
 
     //Delete trip by id

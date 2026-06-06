@@ -35,7 +35,7 @@ public class TripController {
     }
 
     @PutMapping(path = "/update/{id}")
-    public Trip updateTrip(@RequestBody Trip trip, @PathVariable("id") Long id) {
+    public Trip updateTrip(@RequestBody TripRequestDTO trip, @PathVariable("id") Long id) {
         return tripService.updateTrip(trip, id);
     }
 
