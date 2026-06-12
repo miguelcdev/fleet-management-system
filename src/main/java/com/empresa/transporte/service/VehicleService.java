@@ -49,24 +49,17 @@ public class VehicleService {
     }
 
     //Update vehicle
-    public Vehicle updateById(Vehicle request, Long id){
+    public Vehicle updateById(VehicleRequestDTO request, Long id){
 
         //Search vehicle by id
-        Optional<Vehicle> findVehicle = vehicleRepository.findById(id);
+        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
 
-        if (findVehicle.isPresent()){
-            Vehicle vehicle = findVehicle.get();
+        vehicle.setBrand(request.getBrand());
+        vehicle.setModel(request.getModel());
+        vehicle.setLicensePlate(request.getLicensePlate());
+        vehicle.setLoadCapacityKg(request.getLoadCapacityKg());
 
-            vehicle.setBrand(request.getBrand());
-            vehicle.setModel(request.getModel());
-            vehicle.setLicensePlate(request.getLicensePlate());
-            vehicle.setLoadCapacityKg(request.getLoadCapacityKg());
-            vehicle.setCompletedTrips(request.getCompletedTrips());
-            vehicle.setKilometersTraveled(request.getKilometersTraveled());
-
-            return vehicleRepository.save(vehicle);
-        }
-        return null;
+        return vehicleRepository.save(vehicle);
     }
 
     //Delete vehicle by id
