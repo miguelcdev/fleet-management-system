@@ -3,6 +3,7 @@ package com.empresa.transporte.controller;
 import com.empresa.transporte.dto.VehicleRequestDTO;
 import com.empresa.transporte.model.Vehicle;
 import com.empresa.transporte.service.VehicleService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class VehicleController {
     }
 
     @PostMapping("/add")
-    public Vehicle createVehicle(@RequestBody VehicleRequestDTO vehicle){
+    public Vehicle createVehicle(@Valid @RequestBody VehicleRequestDTO vehicle){
         return vehicleService.saveVehicle(vehicle);
     }
 
@@ -34,7 +35,7 @@ public class VehicleController {
     }
 
     @PutMapping(path = "/{id}")
-    public Vehicle updateById(@RequestBody Vehicle vehicle, @PathVariable("id") Long id){
+    public Vehicle updateById(@RequestBody VehicleRequestDTO vehicle, @PathVariable("id") Long id){
         return vehicleService.updateById(vehicle,id);
     }
 
