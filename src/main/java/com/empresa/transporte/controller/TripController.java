@@ -4,6 +4,7 @@ import com.empresa.transporte.dto.TripRequestDTO;
 import com.empresa.transporte.model.Trip;
 import com.empresa.transporte.service.TripService;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class TripController {
     }
 
     @PostMapping("/add")
-    public Trip createTrip(@RequestBody TripRequestDTO trip) {
+    public Trip createTrip(@Valid @RequestBody TripRequestDTO trip) {
         return tripService.saveTrip(trip);
     }
 

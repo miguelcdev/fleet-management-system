@@ -1,9 +1,6 @@
 package com.empresa.transporte.dto;
 
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
@@ -15,19 +12,18 @@ public class TripRequestDTO {
     @NotBlank
     private String destination;
 
-    @NotBlank
+
     @FutureOrPresent
     private LocalDate departureDate;
 
-    @NotBlank
+
     @Future
     private LocalDate arrivalDate;
 
-    @NotBlank
-    @Positive
+    @NotNull
     private Double distanceKm;
 
-    @NotBlank
+    @NotNull
     private Long vehicleId;
 
     public TripRequestDTO() {
