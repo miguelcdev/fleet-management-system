@@ -14,6 +14,7 @@ public class VehicleRequestDTO {
     @NotBlank(message = "The license plate can´t be void")
     private String licensePlate;
 
+    @NotBlank
     @Positive(message = "The load capacity should be writing in positive number")
     private Double loadCapacityKg;
 
