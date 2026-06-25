@@ -7,6 +7,7 @@ import com.empresa.transporte.repository.TripRepository;
 import com.empresa.transporte.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,16 @@ public class TripService {
         trip.setArrivalDate(tripDTO.getArrivalDate());
         trip.setDistanceKm(tripDTO.getDistanceKm());
         trip.setVehicle(vehicle);
+
+        //Validation of the arrival date of trip
+        if (tripDTO.getArrivalDate().isBefore(tripDTO.getDepartureDate())){
+            throw new RuntimeException("Arrival cannot be before departure day");
+        }
+
+        //Validation of departure date of trip
+        if (tripDTO.getDepartureDate().isBefore(LocalDate.now())){
+            throw  new RuntimeException("Departure day cannot be in the past");
+        }
 
         vehicleRepository.save(vehicle);
         return tripRepository.save(trip);
