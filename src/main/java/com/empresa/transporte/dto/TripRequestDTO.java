@@ -21,6 +21,7 @@ public class TripRequestDTO {
     private LocalDate arrivalDate;
 
     @NotNull
+    @Positive
     private Double distanceKm;
 
     @NotNull

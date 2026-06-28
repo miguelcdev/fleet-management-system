@@ -26,7 +26,7 @@ public class TripService {
     //Create new trip
     public Trip saveTrip(TripRequestDTO tripDTO){
 
-        Vehicle vehicle = vehicleRepository.findById(tripDTO.getVehicleId()).orElseThrow(() -> new RuntimeException("Vehicle not found"));
+        Vehicle vehicle = validateVehicleId(tripDTO.getVehicleId());
 
         vehicle.setCompletedTrips(vehicle.getCompletedTrips()+1);
         vehicle.setKilometersTraveled(vehicle.getKilometersTraveled()+ tripDTO.getDistanceKm());
@@ -39,16 +39,8 @@ public class TripService {
         trip.setDistanceKm(tripDTO.getDistanceKm());
         trip.setVehicle(vehicle);
 
-        //Validation of the arrival date of trip
-        if (tripDTO.getArrivalDate().isBefore(tripDTO.getDepartureDate())){
-            throw new RuntimeException("Arrival cannot be before departure day");
-        }
-
-        //Validation of departure date of trip
-        if (tripDTO.getDepartureDate().isBefore(LocalDate.now())){
-            throw  new RuntimeException("Departure day cannot be in the past");
-        }
-
+        //Validation of date insert by user
+        validateTripDates(tripDTO);
         vehicleRepository.save(vehicle);
         return tripRepository.save(trip);
     }
@@ -71,6 +63,9 @@ public class TripService {
         //Search a vehicle by id, which the user want to update for the trip selected by id
         Vehicle vehicle = vehicleRepository.findById(request.getVehicleId()).orElseThrow(() -> new RuntimeException("Vehicle not found"));
 
+        //Validation update of a date
+        validateTripDates(request);
+
         trip.setOrigin(request.getOrigin());
         trip.setDestination(request.getDestination());
         trip.setDepartureDate(request.getDepartureDate());
@@ -89,5 +84,21 @@ public class TripService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void validateTripDates(TripRequestDTO tripDTO){
+        //Validation of the arrival date of trip
+        if (tripDTO.getArrivalDate().isBefore(tripDTO.getDepartureDate())){
+            throw new RuntimeException("Arrival cannot be before departure day");
+        }
+
+        //Validation of departure date of trip
+        if (tripDTO.getDepartureDate().isBefore(LocalDate.now())){
+            throw  new RuntimeException("Departure day cannot be in the past");
+        }
+    }
+
+    public Vehicle validateVehicleId(Long id){
+        return  vehicleRepository.findById(id).orElseThrow(()-> new RuntimeException("Vehicle not found"));
     }
 }
