@@ -1,6 +1,6 @@
 package com.empresa.transporte.controller;
 
-import com.empresa.transporte.dto.TripRequestDTO;
+import com.empresa.transporte.dto.trip.TripRequestDTO;
 import com.empresa.transporte.model.Trip;
 import com.empresa.transporte.service.TripService;
 

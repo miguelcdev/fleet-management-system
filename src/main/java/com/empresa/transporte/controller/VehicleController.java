@@ -1,6 +1,6 @@
 package com.empresa.transporte.controller;
 
-import com.empresa.transporte.dto.VehicleRequestDTO;
+import com.empresa.transporte.dto.vehicle.VehicleRequestDTO;
 import com.empresa.transporte.model.Vehicle;
 import com.empresa.transporte.service.VehicleService;
 import jakarta.validation.Valid;

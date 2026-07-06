@@ -1,6 +1,6 @@
 package com.empresa.transporte.service;
 
-import com.empresa.transporte.dto.VehicleRequestDTO;
+import com.empresa.transporte.dto.vehicle.VehicleRequestDTO;
 import com.empresa.transporte.model.Vehicle;
 import com.empresa.transporte.repository.VehicleRepository;
 import org.springframework.stereotype.Service;

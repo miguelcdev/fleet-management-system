@@ -1,4 +1,4 @@
-package com.empresa.transporte.dto;
+package com.empresa.transporte.dto.vehicle;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;

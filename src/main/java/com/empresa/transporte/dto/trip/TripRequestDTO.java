@@ -1,4 +1,4 @@
-package com.empresa.transporte.dto;
+package com.empresa.transporte.dto.trip;
 
 import jakarta.validation.constraints.*;
 
