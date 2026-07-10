@@ -1,6 +1,7 @@
 package com.empresa.transporte.service;
 
 import com.empresa.transporte.dto.vehicle.VehicleRequestDTO;
+import com.empresa.transporte.exception.VehicleNotFoundException;
 import com.empresa.transporte.model.Vehicle;
 import com.empresa.transporte.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
@@ -44,15 +45,15 @@ public class VehicleService {
     }
 
     //Search vehicle information by id
-    public Optional<Vehicle> getVehicle(Long id){
-        return  vehicleRepository.findById(id);
+    public Vehicle getVehicle(Long id){
+        return  vehicleRepository.findById(id).orElseThrow(()->new VehicleNotFoundException("Vehicle with id "+id+" not found"));
     }
 
     //Update vehicle
     public Vehicle updateById(VehicleRequestDTO request, Long id){
 
         //Search vehicle by id
-        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("Vehicle not found"));
+        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new VehicleNotFoundException("Vehicle with id "+id+" not found"));
 
         vehicle.setBrand(request.getBrand());
         vehicle.setModel(request.getModel());
