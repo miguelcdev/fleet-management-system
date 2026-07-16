@@ -1,6 +1,7 @@
 package com.empresa.transporte.service;
 
 import com.empresa.transporte.dto.vehicle.VehicleRequestDTO;
+import com.empresa.transporte.exception.DuplicatePlateException;
 import com.empresa.transporte.exception.VehicleNotFoundException;
 import com.empresa.transporte.model.Vehicle;
 import com.empresa.transporte.repository.VehicleRepository;
@@ -24,7 +25,7 @@ public class VehicleService {
 
         //Validation of the License plate did not the same of the other vehicle registered
         if(vehicleRepository.existsByLicensePlate(vehicleDTO.getLicensePlate())){
-            throw new RuntimeException("License plate already exists");
+            throw new DuplicatePlateException("License plate already exists");
         }
 
         //Creation of new vehicle

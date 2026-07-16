@@ -25,4 +25,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
+    @ExceptionHandler(DuplicatePlateException.class)
+    public ResponseEntity<ErrorResponseDTO> duplicatePlate(DuplicatePlateException ex, HttpServletRequest request){
+
+        ErrorResponseDTO error = new ErrorResponseDTO();
+
+        error.setTimestamps(LocalDateTime.now());
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setError(HttpStatus.NOT_FOUND.getReasonPhrase());
+        error.setMessage(ex.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
 }
