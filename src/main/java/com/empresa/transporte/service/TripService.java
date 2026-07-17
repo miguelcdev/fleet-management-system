@@ -1,6 +1,7 @@
 package com.empresa.transporte.service;
 
 import com.empresa.transporte.dto.trip.TripRequestDTO;
+import com.empresa.transporte.exception.VehicleNotFoundException;
 import com.empresa.transporte.model.Trip;
 import com.empresa.transporte.model.Vehicle;
 import com.empresa.transporte.repository.TripRepository;
@@ -61,7 +62,7 @@ public class TripService {
         Trip trip = tripRepository.findById(id).orElseThrow(() -> new RuntimeException("Trip not found"));
 
         //Search a vehicle by id, which the user want to update for the trip selected by id
-        Vehicle vehicle = vehicleRepository.findById(request.getVehicleId()).orElseThrow(() -> new RuntimeException("Vehicle not found"));
+        Vehicle vehicle= validateVehicleId(request.getVehicleId());
 
         //Validation update of a date
         validateTripDates(request);
@@ -98,7 +99,8 @@ public class TripService {
         }
     }
 
+    //Global method that validate the id of a vehicle.
     public Vehicle validateVehicleId(Long id){
-        return  vehicleRepository.findById(id).orElseThrow(()-> new RuntimeException("Vehicle not found"));
+        return  vehicleRepository.findById(id).orElseThrow(()-> new VehicleNotFoundException("Vehicle with id "+ id +" was not found in the system."));
     }
 }
