@@ -1,6 +1,7 @@
 package com.empresa.transporte.service;
 
 import com.empresa.transporte.dto.trip.TripRequestDTO;
+import com.empresa.transporte.exception.InvalidTripDateException;
 import com.empresa.transporte.exception.VehicleNotFoundException;
 import com.empresa.transporte.model.Trip;
 import com.empresa.transporte.model.Vehicle;
@@ -90,12 +91,12 @@ public class TripService {
     public void validateTripDates(TripRequestDTO tripDTO){
         //Validation of the arrival date of trip
         if (tripDTO.getArrivalDate().isBefore(tripDTO.getDepartureDate())){
-            throw new RuntimeException("Arrival cannot be before departure day");
+            throw new InvalidTripDateException("Arrival cannot be before departure day");
         }
 
         //Validation of departure date of trip
         if (tripDTO.getDepartureDate().isBefore(LocalDate.now())){
-            throw  new RuntimeException("Departure day cannot be in the past");
+            throw  new InvalidTripDateException("Departure day cannot be in the past");
         }
     }
 

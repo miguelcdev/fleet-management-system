@@ -39,4 +39,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
+
+    @ExceptionHandler(InvalidTripDateException.class)
+    public ResponseEntity<ErrorResponseDTO> invalidTripDate(InvalidTripDateException ex, HttpServletRequest request){
+
+        ErrorResponseDTO error = new ErrorResponseDTO();
+
+        error.setTimestamps(LocalDateTime.now());
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setError(HttpStatus.NOT_FOUND.getReasonPhrase());
+        error.setMessage(ex.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 }
